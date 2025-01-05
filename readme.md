@@ -1,7 +1,6 @@
 source: https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks?resource=download
 
 ## next features to add
-- validate the user input - range(MIN, MAX), non-numeric value/ non-integer value DONE
 - filter question: only include books released from x year on
 - filter question: what is the maximum number of pages the book should have
 - validate user input release year & maximum number of pages
@@ -22,7 +21,6 @@ source: https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks?resource=d
 ```
 
 - create button with label "recommend" that starts the process and displays the output
-- add feature option: randomize output of books with minimum average_rating of x to avoid always only resulting in same top books
 
 ```
     Req: Swing: JPanel, JWindow, JButton, JTextFiel etc
