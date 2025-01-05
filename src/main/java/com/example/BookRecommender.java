@@ -24,9 +24,9 @@ public class BookRecommender {
     public static void main(String[] args) {
         
         // ### input section ###
-        int userInput = -1;
-        final int MIN = 1;
-        final int MAX = 30;
+        int bookInput = -1;
+        final int bookMIN = 1;
+        final int bookMAX = 30;
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -34,23 +34,43 @@ public class BookRecommender {
             String input = scanner.nextLine();
             
             try {
-                userInput = Integer.parseInt(input);
-                if (userInput >= MIN && userInput <= MAX) {
+                bookInput = Integer.parseInt(input);
+                if (bookInput >= bookMIN && bookInput <= bookMAX) {
                     break;
                 } else {
-                    System.out.println("Please enter a number between " + MIN + " and " + MAX + ".");
+                    System.out.println("Please enter a number between " + bookMIN + " and " + bookMAX + ".");
                 } 
             } catch (NumberFormatException e) {
                 System.out.println("Input invalid, please enter a valid number.");
             }
         }
 
-        System.out.println("You entered: " + userInput);
-        
-        int numBooks = userInput;
+        float ratingInput = -1;
+        final float ratingMIN = 1;
+        final float ratingMAX = 5;
+
+        while (true) {
+            System.out.println("Which average rating should the book have at minimum? \n- Valid ratings are between 1.0 and 5.0. \n- You can use decimal values such as '4.0'. \n- Please use the '.' and not a ','.");
+            String input = scanner.nextLine();
+            
+            try {
+                ratingInput = Float.parseFloat(input);
+                if (ratingInput >= ratingMIN && ratingInput <= ratingMAX) {
+                    break;
+                } else {
+                    System.out.println("Please enter a number between " + ratingMIN + " and " + ratingMAX + ".");
+                } 
+            } catch (NumberFormatException e) {
+                System.out.println("Input invalid, please enter a valid number.");
+            }
+        }
+
+        System.out.println("You entered: " + ratingInput);
+
+        int numBooks = bookInput;
 
         System.out.println("Excluding books with less than 50 ratings...");
-        System.out.println("These are your top " + numBooks + " books:");
+        System.out.println("I recommend you to check out the following " + numBooks + " books, having a minimum average rating of " + ratingInput + ":");
 
         String filePath = BookRecommender.class.getClassLoader().getResource("goodreadsbooks.csv").getPath();
         BookRecommender recommender = new BookRecommender();
@@ -60,9 +80,9 @@ public class BookRecommender {
         // ### filtering section ###
         for (String[] row : data.subList(1, data.size())) {
             try {
-                int reviews = Integer.parseInt(row [8]);
-                double rating = Double.parseDouble(row[3]);
-                if (reviews >= 50 && !row[3].isEmpty()) {
+                float reviews = Float.parseFloat(row [8]);
+                float rating = Float.parseFloat(row[3]);
+                if (reviews >= 50 && !row[3].isEmpty() && rating >= ratingInput) {
                     filteredData.add(row);
                 }
             } catch (NumberFormatException | NullPointerException e) {
@@ -70,22 +90,23 @@ public class BookRecommender {
             }
         }
 
+        // randomize by shuffling and reduce by creating sublist
+        Collections.shuffle(filteredData);
+        List<String[]> reducedData = filteredData.subList(0, Math.min(bookInput, filteredData.size()));
+
         // ### sorting section ###
-        Collections.sort(filteredData, (row1, row2) -> {
+        Collections.sort(reducedData, (row1, row2) -> {
             Double rating1 = Double.parseDouble(row1[3]);
             Double rating2 = Double.parseDouble(row2[3]);
             return rating2.compareTo(rating1); 
     });
 
-
         // ### output section ###
-        for (int i = 0; i < numBooks && i <= 100; i++) {
-            String[] row = filteredData.get(i);
+        for (String[] row : reducedData) {
+            String title = row[1];
+            String rating = row[3];
 
-            String field1 = row[1];
-            String field2 = row[3];
-
-            System.out.println(field1 + ": " + field2);
+            System.out.println(title + ": " + rating);
         }
         
         scanner.close();

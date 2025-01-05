@@ -1,9 +1,10 @@
 source: https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks?resource=download
 
 ## next features to add
-- validate the user input - range(MIN, MAX), non-numeric value/ non-integer value
+- validate the user input - range(MIN, MAX), non-numeric value/ non-integer value DONE
 - filter question: only include books released from x year on
 - filter question: what is the maximum number of pages the book should have
+- validate user input release year & maximum number of pages
 - save the year and number pages counts in a text file stat.csvfile 'stat.csv'. 
 - display average year and number values on UI when user quits the app
 
