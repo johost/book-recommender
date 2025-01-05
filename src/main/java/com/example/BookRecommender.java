@@ -39,7 +39,7 @@ public class BookRecommender {
             }
         }
 
-        for (int i = 1; i < numBooks && i <= 100; i++) {
+        for (int i = 0; i < numBooks && i <= 100; i++) {
             String[] row = filteredData.get(i);
 
             String field1 = row[1];
