@@ -22,9 +22,32 @@ public class BookRecommender {
     }
 
     public static void main(String[] args) {
-        System.out.println("How many books are you looking for?");
+        
+        // ### input section ###
+        int userInput = -1;
+        final int MIN = 1;
+        final int MAX = 30;
         Scanner scanner = new Scanner(System.in);
-        int numBooks = scanner.nextInt();
+
+        while (true) {
+            System.out.println("How many books are you looking for?");
+            String input = scanner.nextLine();
+            
+            try {
+                userInput = Integer.parseInt(input);
+                if (userInput >= MIN && userInput <= MAX) {
+                    break;
+                } else {
+                    System.out.println("Please enter a number between " + MIN + " and " + MAX + ".");
+                } 
+            } catch (NumberFormatException e) {
+                System.out.println("Input invalid, please enter a valid number.");
+            }
+        }
+
+        System.out.println("You entered: " + userInput);
+        
+        int numBooks = userInput;
 
         System.out.println("Excluding books with less than 50 ratings...");
         System.out.println("These are your top " + numBooks + " books:");
