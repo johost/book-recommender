@@ -53,7 +53,7 @@ public class BookRecommender {
         final float ratingMAX = 5;
 
         while (true) {
-            System.out.println("Which average rating should the book have at minimum? \n- Valid ratings are between 1.0 and 5.0. \n- You can use decimal values such as '4.0'. \n- Please use the '.' and not a ','.");
+            System.out.println("\nWhich average rating should the book have at minimum? \n- Valid ratings are between 1.0 and 5.0. \n- You can use decimal values such as '4.0'. \n- Please use the '.' and not a ','.");
             String input = scanner.nextLine();
             
             try {
@@ -76,7 +76,7 @@ public class BookRecommender {
         final int yearMAX = 2020;
 
         while (true) {
-            System.out.println("How old should the books be maxmium? \n- The oldest books are from 1900 \n- The newest books are from 2020");
+            System.out.println("\nHow old should the books be maxmium? \n- The oldest books are from 1900 \n- The newest books are from 2020");
             String input = scanner.nextLine();
             
             try {
@@ -99,7 +99,7 @@ public class BookRecommender {
         final int pagesMAX = 6576;
 
         while (true) {
-            System.out.println("How many pages should the books have maxmium? \n- Please start from 1 minimum \n- The longest book in the dataset has 6576 pages");
+            System.out.println("\nHow many pages should the books have maxmium? \n- Please start from 1 minimum \n- The longest book in the dataset has 6576 pages");
             String input = scanner.nextLine();
             
             try {
@@ -119,8 +119,7 @@ public class BookRecommender {
         // continue processing
         int numBooks = bookInput;
 
-        System.out.println("Excluding books with less than 50 ratings...");
-        System.out.println("I recommend you to check out the following " + numBooks + " books, having a minimum average rating of " + ratingInput + ":");
+        System.out.println("\nExcluding books with less than 50 ratings...");
 
         String filePath = BookRecommender.class.getClassLoader().getResource("goodreadsbooks.csv").getPath();
         BookRecommender recommender = new BookRecommender();
@@ -132,7 +131,11 @@ public class BookRecommender {
             try {
                 float reviews = Float.parseFloat(row [8]);
                 float rating = Float.parseFloat(row[3]);
-                if (reviews >= 50 && !row[3].isEmpty() && rating >= ratingInput) {
+                int pages = Integer.parseInt(row[7]);
+                String[] dateParts = row[10].split("/");
+                int year = Integer.parseInt(dateParts[2]);
+                    
+                if (reviews >= 50 && !row[3].isEmpty() && rating >= ratingInput && year >= yearInput && pages <= pagesInput) {
                     filteredData.add(row);
                 }
             } catch (NumberFormatException | NullPointerException e) {
@@ -140,9 +143,13 @@ public class BookRecommender {
             }
         }
 
+        System.out.println("Filtered data size: " + filteredData.size() + " books");
+
         // randomize by shuffling and reduce by creating sublist
         Collections.shuffle(filteredData);
         List<String[]> reducedData = filteredData.subList(0, Math.min(bookInput, filteredData.size()));
+
+        System.out.println("Reduced data size: " + reducedData.size() + " books"); 
 
         // ### sorting section ###
         Collections.sort(reducedData, (row1, row2) -> {
@@ -151,14 +158,18 @@ public class BookRecommender {
             return rating2.compareTo(rating1); 
     });
 
+        System.out.println("\nI recommend you to check out the following " + numBooks + " books, having a minimum average rating of " + ratingInput + ":");
+
         // ### output section ###
         for (String[] row : reducedData) {
             String title = row[1];
             String rating = row[3];
+            String[] dateParts = row[10].split("/");
+            String year = dateParts[2];
+            String pages = row[7];
 
-            System.out.println(title + ": " + rating);
+            System.out.println(title + " " + "(" + year + "): " + rating + ", " + pages + " pages");
         }
-        
         scanner.close();
 
     }
