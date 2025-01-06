@@ -24,6 +24,8 @@ public class BookRecommender {
     public static void main(String[] args) {
         
         // ### input section ###
+
+        // how many books?
         int bookInput = -1;
         final int bookMIN = 1;
         final int bookMAX = 30;
@@ -45,6 +47,7 @@ public class BookRecommender {
             }
         }
 
+        // what rating?
         float ratingInput = -1;
         final float ratingMIN = 1;
         final float ratingMAX = 5;
@@ -67,6 +70,53 @@ public class BookRecommender {
 
         System.out.println("You entered: " + ratingInput);
 
+        // how old maximum?
+        int yearInput = -1;
+        final int yearMIN = 1900;
+        final int yearMAX = 2020;
+
+        while (true) {
+            System.out.println("How old should the books be maxmium? \n- The oldest books are from 1900 \n- The newest books are from 2020");
+            String input = scanner.nextLine();
+            
+            try {
+                yearInput = Integer.parseInt(input);
+                if (yearInput >= yearMIN && yearInput <= yearMAX) {
+                    break;
+                } else {
+                    System.out.println("Please enter a number between " + yearMIN + " and " + yearMAX + ".");
+                } 
+            } catch (NumberFormatException e) {
+                System.out.println("Input invalid, please enter a valid number.");
+            }
+        }
+
+        System.out.println("You entered: " + yearInput);
+
+        // how many pages maximum?
+        int pagesInput = -1;
+        final int pagesMIN = 1;
+        final int pagesMAX = 6576;
+
+        while (true) {
+            System.out.println("How many pages should the books have maxmium? \n- Please start from 1 minimum \n- The longest book in the dataset has 6576 pages");
+            String input = scanner.nextLine();
+            
+            try {
+                pagesInput = Integer.parseInt(input);
+                if (pagesInput >= pagesMIN && pagesInput <= pagesMAX) {
+                    break;
+                } else {
+                    System.out.println("Please enter a number between " + pagesMIN + " and " + pagesMAX + ".");
+                } 
+            } catch (NumberFormatException e) {
+                System.out.println("Input invalid, please enter a valid number.");
+            }
+        }
+
+        System.out.println("You entered: " + pagesInput);
+
+        // continue processing
         int numBooks = bookInput;
 
         System.out.println("Excluding books with less than 50 ratings...");
