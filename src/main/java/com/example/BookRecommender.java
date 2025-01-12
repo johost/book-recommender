@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class BookRecommender {
     public List<String[]> readCSV(String filePath) {
@@ -205,8 +207,12 @@ public class BookRecommender {
             if (count > 0) {
                 double averageYear = (double) sumOfYears / count;
                 double averagePages = (double) sumOfPages / count;
-                System.out.printf("Average years entered by users: %.1f%n", averageYear); //limit output to one value after .
-                System.out.printf("Average maximum number of pages entered by users: %.1f%n", averagePages);
+
+                NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US); // fix issue with , instead of . decimal, set to US, limit to 1 decimal
+                formatter.setMaximumFractionDigits(1); 
+                formatter.setGroupingUsed(false);
+                System.out.println("Average years entered by users: " + formatter.format(averageYear));
+                System.out.println("Average maximum number of pages entered by users: " + formatter.format(averagePages));
             } else System.out.println("\nNo valid data available in stats.csv.");
         } catch (IOException e) {
             e.printStackTrace();
