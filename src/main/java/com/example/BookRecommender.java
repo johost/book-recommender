@@ -2,6 +2,8 @@ package com.example;
 
 import com.opencsv.CSVReader;
 import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -177,6 +179,37 @@ public class BookRecommender {
         // write statistics in stats.csv
         StatsWriter statsWriter = new StatsWriter("stats.csv");
         statsWriter.writeStats(yearInput, pagesInput);
-        System.out.println("User input saved to stats.csv.");
+        System.out.println("\nUser input saved to stats.csv.");
+
+        // read from stats.csv for statistics
+        try (BufferedReader reader = new BufferedReader(new FileReader("stats.csv"))) {
+            String line;
+            int sumOfYears = 0;
+            int sumOfPages = 0;
+            int count= 0;
+
+            reader.readLine(); //skip header line
+
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",");
+                int year = Integer.parseInt(fields[0]);
+                int pages = Integer.parseInt(fields[1]);
+
+                sumOfYears += year;
+                sumOfPages += pages;
+                count++;
+            }
+            
+            reader.close();
+
+            if (count > 0) {
+                double averageYear = (double) sumOfYears / count;
+                double averagePages = (double) sumOfPages / count;
+                System.out.printf("Average years entered by users: %.1f%n", averageYear); //limit output to one value after .
+                System.out.printf("Average maximum number of pages entered by users: %.1f%n", averagePages);
+            } else System.out.println("\nNo valid data available in stats.csv.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
