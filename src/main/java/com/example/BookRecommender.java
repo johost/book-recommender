@@ -156,7 +156,8 @@ public class BookRecommender {
             Double rating1 = Double.parseDouble(row1[3]);
             Double rating2 = Double.parseDouble(row2[3]);
             return rating2.compareTo(rating1); 
-    });
+        
+        });
 
         System.out.println("\nI recommend you to check out the following " + numBooks + " books, having a minimum average rating of " + ratingInput + ":");
 
@@ -171,6 +172,11 @@ public class BookRecommender {
             System.out.println(title + " " + "(" + year + "): " + rating + ", " + pages + " pages");
         }
         scanner.close();
+        System.out.println("Have fun reading!");
 
+        // write statistics in stats.csv
+        StatsWriter statsWriter = new StatsWriter("stats.csv");
+        statsWriter.writeStats(yearInput, pagesInput);
+        System.out.println("User input saved to stats.csv.");
     }
 }
