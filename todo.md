@@ -1,0 +1,77 @@
+
+
+## Desktop app:
+
+- Create an interface to enter the year and number of max pages
+
+```
+    year: textbox
+    max pages: textbox
+```
+
+- create button with label "recommend" that starts the process and displays the output
+
+```
+    Req: Swing: JPanel, JWindow, JButton, JTextFiel etc
+```
+
+
+
+#### Web Application:
+
+- Create a web application to play the same game in the browser. Reuse the previous code on the backend
+
+    Req: Use Spring Boot / Spring Web , HTML (JSP or Thymeleaf)
+
+- Add a sign-up page to register users. Update logic to allow only the registered/logged-in users to play. 
+    
+    Req: DB(Use H2), Spring Data JPA to store User info, Spring Security
+ 
+- (Optional) Use ReCaptcha to prevent robot making requests.
+
+- Block users from playing more than 1 hour. Lock them for 2 hours.
+
+- (Optional) Two-player: list online users and provide the ability to request/accept to play with the user. Use WebSocket to listen for updates in realtime.
+
+- (Optional) Make it multi-player
+
+- Store the win/loss statistics into DB.
+
+-  Generate a CSV report with stats about the winner, numbers, etc that you can download it from the web interface. 
+
+    Req: https://github.com/gtiwari333/spring-boot-blog-app/blob/master/src/main/java/gt/app/web/mvc/DownloadController.java
+
+-  Schedule the report to run every day and deliver it to your email address.
+
+    Req: Spring `@Scheduled` 
+
+-  Setup a background job that sends an account deactivation email if the user is not logged-in in last 20 days
+
+-  Setup a background job to deactivate user if the user is not logged-in in the last 30 days
+
+-  Setup a public web REST API to expose information about the winners
+
+    Req: Spring `@RestController`
+
+-  Use caching to read user profile from the cache instead of reading from DB on every request
+    
+    Req: Spring's `@Cacheable`
+
+-  Setup a Dockerfile script to run your app in docker. Or use buildpack plugin
+
+-  Setup static code analysis with local SonarQube instance. You can use docker to run SonarQube. Take care of SonarQube warnings.
+
+-  Deploy your app in a cloud environment (eg Heroku, AWS, Azure, Oracle). Use free tier resources. Oracle has "always-free" tier.
+
+- Write e2e test
+
+- ...
+
+
+### Note: 
+
+- Focus on readability, reusability throughout the development.
+- Try to make your app modular
+- Use the build system eg: Maven, Gradle
+- Use git
+- Writ tests(unit, integration) after each step 
