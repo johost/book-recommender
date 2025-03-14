@@ -1,12 +1,6 @@
 source: https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks?resource=download
 
-## next features to add
-- save the year and number pages counts in a text file stat.csvfile 'stat.csv'. 
-- display average year and number values on UI when user quits the app
 
-```
-    Req: Scanner, Math class, conditional, loop, FileWriter, FileReader
-```
 
 ## Desktop app:
 

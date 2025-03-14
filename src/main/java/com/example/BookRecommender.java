@@ -210,7 +210,7 @@ public class BookRecommender {
 
                 NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US); // fix issue with , instead of . decimal, set to US, limit to 1 decimal
                 formatter.setMaximumFractionDigits(1); 
-                formatter.setGroupingUsed(false);
+                formatter.setGroupingUsed(false); // fix issue with grouping years into values such as 1,985.3 instead of 1985.3
                 System.out.println("Average years entered by users: " + formatter.format(averageYear));
                 System.out.println("Average maximum number of pages entered by users: " + formatter.format(averagePages));
             } else System.out.println("\nNo valid data available in stats.csv.");
